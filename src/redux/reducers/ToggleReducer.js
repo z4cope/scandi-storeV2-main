@@ -18,7 +18,8 @@ const ToggleReducer = (state = initState, action) => {
     case TOGGLE_CURRENCY_MENU:
       return {
         ...state,
-        toggleCurrencyMenuState: !state.toggleCurrencyMenuState,
+        toggleCurrencyMenuState:
+          action.payload === "close" ? false : !state.toggleCurrencyMenuState,
       };
     default:
       return state;

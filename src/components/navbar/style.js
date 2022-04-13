@@ -73,5 +73,18 @@ export const OverLay = styled.div`
   opacity: ${({ active }) => (active ? "1" : "0")};
   transition: all 0.5s;
   pointer-events: ${({ active }) => (active ? "all" : "none")};
-  z-index: 999;
+  z-index: ${({ active }) => (active ? 800 : -1)};
+`;
+
+export const CurrencyOverLay = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0);
+  opacity: ${({ active }) => (active ? "1" : "0")};
+  transition: all 0.5s;
+  pointer-events: ${({ active }) => (active ? "all" : "none")};
+  z-index: ${({ active }) => (active ? 700 : -1)};
 `;

@@ -7,6 +7,7 @@ import {
   productQuantityIncrementAction,
   productQuatityDecrementAction,
 } from "../../redux/actions/productQuantity/productQuantityAction";
+import { toggleCartAction } from "../../redux/actions/toggleCart/toggleCartAction";
 //Styles
 import {
   CartList,
@@ -22,6 +23,7 @@ import {
   Color,
   SelectedVariants,
 } from "./style";
+//utils
 import { generateTotalPrice } from "../../utils/calcTotalPrice";
 
 class OpenCart extends React.Component {
@@ -96,7 +98,9 @@ class OpenCart extends React.Component {
           ).toFixed(2)}
         </Total>
         <CallToActions>
-          <Link to="/cart">VIEW BAG</Link>
+          <Link onClick={() => this.props.toggleCart("close")} to="/cart">
+            VIEW BAG
+          </Link>
           <Link to="#">CHECKOUT</Link>
         </CallToActions>
       </CartList>
@@ -118,6 +122,7 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(productQuantityIncrementAction(product)),
     decrementProduct: (product) =>
       dispatch(productQuatityDecrementAction(product)),
+    toggleCart: (close) => dispatch(toggleCartAction(close)),
   };
 };
 

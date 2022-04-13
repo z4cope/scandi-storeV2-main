@@ -11,7 +11,7 @@ export const CartList = styled.div`
   overflow-y: auto;
   transition: all 0.2s ease;
   opacity: ${({ active }) => (active ? 1 : 0)};
-  z-index: 1000;
+  z-index: ${({ active }) => (active ? 900 : -2)};
 `;
 
 export const CartDetails = styled.div`

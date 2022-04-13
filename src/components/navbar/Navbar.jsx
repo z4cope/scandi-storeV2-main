@@ -15,6 +15,7 @@ import {
   toggleCurrencyMenu,
 } from "../../redux/actions/toggleCart/toggleCartAction";
 import { productsFilterAction } from "../../redux/actions/pagesFilterAction/productsFilterAction";
+import { fetchCategoryProducts } from "../../redux/actions/fetchCategories/fetchCategoriesAction";
 
 //Assests
 import logo from "../../assests/Brand-icon.png";
@@ -29,8 +30,8 @@ import {
   ProductsQty,
   NavElement,
   OverLay,
+  CurrencyOverLay,
 } from "./style";
-import { fetchCategoryProducts } from "../../redux/actions/fetchCategories/fetchCategoriesAction";
 
 class Navbar extends React.Component {
   state = {
@@ -57,6 +58,8 @@ class Navbar extends React.Component {
                       this.props.fetchCategory(category.toLowerCase());
                       this.props.filterPages(i, element.name);
                       this.setNavItemsActiveState(i);
+                      this.props.toggleCart("close");
+                      this.props.toggleCurrencyMenu("close");
                     }}
                     active={this.state.current === i}
                   >
@@ -69,7 +72,12 @@ class Navbar extends React.Component {
               <img src={logo} alt="logo" />
             </Link>
             <ul className="nav-actions">
-              <li onClick={() => this.props.toggleCurrencyMenu()}>
+              <li
+                onClick={() => {
+                  this.props.toggleCurrencyMenu();
+                  this.props.toggleCart("close");
+                }}
+              >
                 {this.props.currency}{" "}
                 <svg
                   width="8"
@@ -88,7 +96,10 @@ class Navbar extends React.Component {
               </li>
               <li>
                 <StyledCart
-                  onClick={() => this.props.toggleCart()}
+                  onClick={() => {
+                    this.props.toggleCart();
+                    this.props.toggleCurrencyMenu("close");
+                  }}
                   src="/images/emptyCart.svg"
                 >
                   <ProductsQty>
@@ -105,6 +116,10 @@ class Navbar extends React.Component {
           active={this.props.toggle}
           onClick={() => this.props.toggleCart()}
         />
+        <CurrencyOverLay
+          active={this.props.currencyToggle}
+          onClick={() => this.props.toggleCurrencyMenu("close")}
+        />
       </>
     );
   }
@@ -114,6 +129,7 @@ class Navbar extends React.Component {
 const mapStateToProps = (state) => {
   return {
     toggle: state.toggle.toggleState,
+    currencyToggle: state.toggle.toggleCurrencyMenuState,
     currency: state.currency.currentSymbol,
     cart: state.cart.data,
   };
@@ -123,8 +139,8 @@ const mapDispatchToProps = (dispatch) => {
   return {
     fetchCategory: (categoryName) =>
       dispatch(fetchCategoryProducts(categoryName)),
-    toggleCart: () => dispatch(toggleCartAction()),
-    toggleCurrencyMenu: () => dispatch(toggleCurrencyMenu()),
+    toggleCart: (close) => dispatch(toggleCartAction(close)),
+    toggleCurrencyMenu: (close) => dispatch(toggleCurrencyMenu(close)),
     filterPages: (arrIndex, catName) =>
       dispatch(productsFilterAction(arrIndex, catName)),
   };

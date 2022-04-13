@@ -9,8 +9,9 @@ export const toggleCartAction = (close) => (dispatch) => {
   });
 };
 
-export const toggleCurrencyMenu = () => (dispatch) => {
+export const toggleCurrencyMenu = (close) => (dispatch) => {
   dispatch({
     type: TOGGLE_CURRENCY_MENU,
+    payload: close,
   });
 };
